@@ -1,0 +1,52 @@
+@SmartRestaurant.Api_HostAddress = http://localhost:5027
+
+### Tische
+GET {{SmartRestaurant.Api_HostAddress}}/api/tische
+Accept: application/json
+
+### Mitarbeiter
+GET {{SmartRestaurant.Api_HostAddress}}/api/mitarbeiter
+Accept: application/json
+
+### Artikel
+GET {{SmartRestaurant.Api_HostAddress}}/api/artikel
+Accept: application/json
+
+### Lagerbestand
+GET {{SmartRestaurant.Api_HostAddress}}/api/lager
+Accept: application/json
+
+### Lagerbestand anpassen
+PUT {{SmartRestaurant.Api_HostAddress}}/api/lager/1
+Content-Type: application/json
+
+{
+  "soll": 40,
+  "ist": 35
+}
+
+### Neue Bestellung aufgeben
+POST {{SmartRestaurant.Api_HostAddress}}/api/bestellungen
+Content-Type: application/json
+
+{
+  "tischId": 1,
+  "positionen": [
+    { "artikelId": 1, "menge": 2 }
+  ]
+}
+
+### Bestellung abrufen
+GET {{SmartRestaurant.Api_HostAddress}}/api/bestellungen/1
+Accept: application/json
+
+### Bestellstatus ändern
+PATCH {{SmartRestaurant.Api_HostAddress}}/api/bestellungen/1/status
+Content-Type: application/json
+
+{
+  "mitarbeiterId": 1,
+  "neuerStatus": "In Zubereitung"
+}
+
+###

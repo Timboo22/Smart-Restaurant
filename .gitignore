@@ -1,0 +1,32 @@
+# ---------- .NET / Backend (SmartRestaurant.Api) ----------
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET publish output
+[Pp]ublish/
+
+# ---------- IDE ----------
+.idea/
+.vs/
+*.swp
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+
+# ---------- Docker ----------
+docker-compose.override.yaml
+docker-compose.override.yml
+
+# ---------- Logs ----------
+*.log
+logs/
+
+# ---------- Environment / Secrets ----------
+.env
+.env.*
+appsettings.*.local.json
