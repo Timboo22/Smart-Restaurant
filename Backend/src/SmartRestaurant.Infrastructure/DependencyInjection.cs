@@ -16,6 +16,9 @@ public static class DependencyInjection
                 ?? throw new InvalidOperationException(
                     "Connection string 'SmartRestaurant' was not configured.")));
 
+        services.AddHealthChecks()
+            .AddDbContextCheck<SmartRestaurantDbContext>("database");
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITischRepository, TischRepository>();
         services.AddScoped<IMitarbeiterRepository, MitarbeiterRepository>();

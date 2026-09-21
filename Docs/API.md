@@ -231,6 +231,39 @@ Fehlerantworten (`400`/`404`) mit zusätzlichem Kontext liefern ein einfaches Ob
 
 `404`-Antworten ohne Zusatzinformation (z.B. Bestellung/Lagerbestand nicht gefunden) haben keinen Body.
 
+Unerwartete Serverfehler (z.B. Datenbank nicht erreichbar) werden global abgefangen und als [RFC 9110 `ProblemDetails`](https://www.rfc-editor.org/rfc/rfc9110#section-15.6.1) mit Statuscode `500` geliefert:
+
+```json
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.6.1",
+  "title": "Ein unerwarteter Fehler ist aufgetreten.",
+  "status": 500,
+  "instance": "/api/artikel"
+}
+```
+
+> [!INFO] Im Development-Modus (`ASPNETCORE_ENVIRONMENT=Development`) enthält die Antwort zusätzlich ein `detail`-Feld mit Exception-Stacktrace. In Production wird dieses Feld weggelassen.
+
+---
+
+## Health Check
+
+`GET /health`
+
+Prüft den Zustand der API inkl. Datenbankverbindung. Gedacht für Monitoring/Docker-Healthchecks, nicht für Frontend-Business-Logik.
+
+```json
+{
+  "status": "Healthy",
+  "checks": [
+    { "name": "database", "status": "Healthy", "description": null }
+  ],
+  "durationMs": 12.4
+}
+```
+
+**Status Codes**: `200 OK` (alle Checks `Healthy`) / `503 Service Unavailable` (mind. ein Check `Unhealthy`, z.B. Datenbank nicht erreichbar).
+
 ---
 
 ## Endpunkt-Übersicht
@@ -245,3 +278,4 @@ Fehlerantworten (`400`/`404`) mit zusätzlichem Kontext liefern ein einfaches Ob
 | PUT | `/api/lager/{zutatenId}` | Lagerbestand anpassen |
 | GET | `/api/tische` | Tischübersicht |
 | GET | `/api/mitarbeiter` | Mitarbeiterliste |
+| GET | `/health` | Health-Status (API & Datenbank) |
