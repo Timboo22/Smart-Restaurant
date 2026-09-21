@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SmartRestaurant.Api/SmartRestaurant.Api.csproj" />
+    <Project Path="src/SmartRestaurant.Application/SmartRestaurant.Application.csproj" />
+    <Project Path="src/SmartRestaurant.Domain/SmartRestaurant.Domain.csproj" />
+    <Project Path="src/SmartRestaurant.Infrastructure/SmartRestaurant.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SmartRestaurant.Application.Tests/SmartRestaurant.Application.Tests.csproj" />
+  </Folder>
+</Solution>

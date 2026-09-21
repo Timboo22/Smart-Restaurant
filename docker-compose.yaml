@@ -17,8 +17,8 @@
 
   api:
     build:
-      context: ./Backend/SmartRestaurant.Api
-      dockerfile: Dockerfile
+      context: ./Backend
+      dockerfile: src/SmartRestaurant.Api/Dockerfile
     container_name: smartrestaurant-api
 
     depends_on:
