@@ -7,6 +7,8 @@
 > - Interaktive API-Referenz (nur im Development-Modus): `/scalar`
 >
 > Alle Endpunkte erwarten/liefern `application/json`. Alle JSON-Felder sind **camelCase** (z.B. `tischId`, `artikelName`).
+>
+> `zeitpunkt`-Felder haben **kein** `Z`-Suffix (z.B. `"2026-09-01T12:30:00"`), sind aber intern UTC — Details und alle weiteren JSON-Formate (inkl. Fehler- und Health-Antworten) stehen in [JSONFORMAT.md](./JSONFORMAT.md).
 
 ---
 
@@ -58,7 +60,7 @@ Liefert eine einzelne Bestellung inkl. aller Positionen (mit aktuellem Artikelna
   "bestellungId": 101,
   "tischId": 4,
   "status": "In Zubereitung",
-  "zeitpunkt": "2026-09-01T12:30:00Z",
+  "zeitpunkt": "2026-09-01T12:30:00",
   "gesamtbetrag": 28.50,
   "positionen": [
     {
@@ -76,7 +78,7 @@ Liefert eine einzelne Bestellung inkl. aller Positionen (mit aktuellem Artikelna
       "mitarbeiterId": 2,
       "mitarbeiterName": "Max Mustermann",
       "status": "Aufgenommen",
-      "zeitpunkt": "2026-09-01T12:30:00Z"
+      "zeitpunkt": "2026-09-01T12:30:00"
     }
   ]
 }
