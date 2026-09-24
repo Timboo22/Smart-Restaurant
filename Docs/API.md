@@ -209,7 +209,30 @@ Liefert alle Artikel inkl. der für jeden Artikel benötigten Zutaten (für z.B.
 
 **Status Codes**: `200 OK`.
 
-### 4.2 Mitarbeiter
+### 4.2 Belegungsstatus eines Tisches setzen
+
+`PUT /api/tische/{id}/status`
+
+Setzt, ob ein Tisch belegt ist. Das Frontend ruft dies auf, wenn an einem Tisch die erste Position bestellt wird (`istBelegt: true`) bzw. wenn eine Bestellung vollständig bezahlt wurde (`istBelegt: false`) — nur so bleibt der Belegungsstatus auch nach einem Neuladen der Seite korrekt (er wird **nicht** automatisch aus offenen Bestellungen abgeleitet).
+
+**Request Body**
+
+| Feld | Typ | Pflicht |
+|---|---|---|
+| `istBelegt` | boolean | ja |
+
+```json
+{
+  "istBelegt": true
+}
+```
+
+**Response**
+
+- `200 OK` – Body enthält den aktualisierten Tisch (gleiches Format wie ein Eintrag aus [4.1](#41-tischübersicht)).
+- `404 Not Found` – Für die angegebene `id` existiert kein Tisch.
+
+### 4.3 Mitarbeiter
 
 `GET /api/mitarbeiter`
 
@@ -279,5 +302,6 @@ Prüft den Zustand der API inkl. Datenbankverbindung. Gedacht für Monitoring/Do
 | GET | `/api/lager` | Lagerbestand abfragen |
 | PUT | `/api/lager/{zutatenId}` | Lagerbestand anpassen |
 | GET | `/api/tische` | Tischübersicht |
+| PUT | `/api/tische/{id}/status` | Belegungsstatus eines Tisches setzen |
 | GET | `/api/mitarbeiter` | Mitarbeiterliste |
 | GET | `/health` | Health-Status (API & Datenbank) |

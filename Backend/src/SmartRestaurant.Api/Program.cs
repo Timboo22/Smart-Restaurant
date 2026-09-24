@@ -5,6 +5,8 @@ using SmartRestaurant.Api.Middleware;
 using SmartRestaurant.Application;
 using SmartRestaurant.Infrastructure;
 
+const string FrontendCorsPolicy = "Frontend";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,12 +25,22 @@ builder.Services.AddOpenApi(options =>
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+builder.Services.AddCors(options =>
+{
+    // Deckt sowohl "npm run dev" (Vite-Standardport) als auch den Frontend-Container
+    // aus docker-compose.yaml ab, beide laufen für den Browser unter localhost:5173.
+    options.AddPolicy(FrontendCorsPolicy, policy => policy
+        .WithOrigins("http://localhost:5173", "http://localhost:4173")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
 app.UseExceptionHandler();
+app.UseCors(FrontendCorsPolicy);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -6,4 +6,5 @@ public interface ITischRepository
 {
     Task<List<Tisch>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default);
+    Task<Tisch?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 }

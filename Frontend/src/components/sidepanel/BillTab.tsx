@@ -8,9 +8,11 @@ interface BillTabProps {
   table: Table;
   onChangeQty: (id: string, delta: number) => void;
   onPay: () => void;
+  isPaying?: boolean;
+  payError?: string | null;
 }
 
-export default function BillTab({ table, onChangeQty, onPay }: BillTabProps) {
+export default function BillTab({ table, onChangeQty, onPay, isPaying, payError }: BillTabProps) {
   const [selectedPayType, setSelectedPayType] = useState<"bar" | "karte" | null>(null);
   const total = getTotal(table.order);
   const tax = total * 0.19;
@@ -140,7 +142,7 @@ export default function BillTab({ table, onChangeQty, onPay }: BillTabProps) {
 
       <button
         onClick={onPay}
-        disabled={!selectedPayType}
+        disabled={!selectedPayType || isPaying}
         style={{
           width: "100%",
           background: selectedPayType ? "var(--c-green)" : "var(--c-surface-2)",
@@ -151,15 +153,34 @@ export default function BillTab({ table, onChangeQty, onPay }: BillTabProps) {
           fontFamily: "'DM Sans', sans-serif",
           fontWeight: 700,
           fontSize: 15,
-          cursor: selectedPayType ? "pointer" : "not-allowed",
+          cursor: selectedPayType && !isPaying ? "pointer" : "not-allowed",
           letterSpacing: "0.01em",
           transition: "all 0.2s",
+          opacity: isPaying ? 0.7 : 1,
         }}
       >
-        {selectedPayType
-          ? `Bezahlt (${selectedPayType === "bar" ? "Bar" : "Karte"}) — Tisch freigeben`
-          : "Zahlungsart wählen"}
+        {isPaying
+          ? "Wird verarbeitet…"
+          : selectedPayType
+            ? `Bezahlt (${selectedPayType === "bar" ? "Bar" : "Karte"}) — Tisch freigeben`
+            : "Zahlungsart wählen"}
       </button>
+
+      {payError && (
+        <div
+          style={{
+            marginTop: 10,
+            padding: "8px 12px",
+            borderRadius: 6,
+            background: "color-mix(in srgb, var(--c-amber) 12%, transparent)",
+            border: "1px solid var(--c-amber-border)",
+            color: "var(--c-amber)",
+            fontSize: 12,
+          }}
+        >
+          {payError}
+        </div>
+      )}
 
       <div style={{ textAlign: "center", marginTop: 10, fontSize: 11, color: "var(--c-muted-2)" }}>
         Tisch wird nach Zahlung auf "Frei" gesetzt

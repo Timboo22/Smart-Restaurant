@@ -11,11 +11,15 @@ interface SidePanelProps {
   setTab: (tab: PanelTab) => void;
   category: string;
   setCategory: (category: string) => void;
+  menu: MenuItem[];
+  categories: string[];
   onClose: () => void;
   onSetStatus: (id: number, status: TableStatus) => void;
   onAdd: (item: MenuItem) => void;
   onChangeQty: (id: string, delta: number) => void;
   onPay: () => void;
+  isPaying?: boolean;
+  payError?: string | null;
 }
 
 export default function SidePanel({
@@ -24,11 +28,15 @@ export default function SidePanel({
   setTab,
   category,
   setCategory,
+  menu,
+  categories,
   onClose,
   onSetStatus,
   onAdd,
   onChangeQty,
   onPay,
+  isPaying,
+  payError,
 }: SidePanelProps) {
   return (
     <aside
@@ -125,11 +133,19 @@ export default function SidePanel({
             table={table}
             category={category}
             setCategory={setCategory}
+            menu={menu}
+            categories={categories}
             onAdd={onAdd}
             onChangeQty={onChangeQty}
           />
         ) : (
-          <BillTab table={table} onChangeQty={onChangeQty} onPay={onPay} />
+          <BillTab
+            table={table}
+            onChangeQty={onChangeQty}
+            onPay={onPay}
+            isPaying={isPaying}
+            payError={payError}
+          />
         )}
       </div>
 

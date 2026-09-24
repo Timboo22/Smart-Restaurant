@@ -194,7 +194,17 @@
 ]
 ```
 
-### 4.2 Mitarbeiter (`GET /api/mitarbeiter`)
+### 4.2 Belegungsstatus setzen (`PUT /api/tische/{id}/status`)
+
+> [!NOTE] Request Payload `istBelegt` wird **nicht** automatisch aus offenen Bestellungen abgeleitet — das Frontend muss diesen Endpoint selbst aufrufen (bei der ersten Position einer neuen Bestellung mit `true`, nach vollständiger Bezahlung mit `false`). Response-Format entspricht einem einzelnen Eintrag aus 4.1.
+
+```json
+{
+  "istBelegt": true
+}
+```
+
+### 4.3 Mitarbeiter (`GET /api/mitarbeiter`)
 
 ```json
 [
@@ -235,6 +245,7 @@ Tritt auf bei:
 | `POST /api/bestellungen` | `404` | `tischId` oder eine `artikelId` existiert nicht |
 | `PATCH /api/bestellungen/{id}/status` | `404` | Bestellung oder `mitarbeiterId` existiert nicht |
 | `PUT /api/lager/{zutatenId}` | `404` | Für `zutatenId` existiert kein Lagerbestand-Eintrag |
+| `PUT /api/tische/{id}/status` | `404` | Für `id` existiert kein Tisch |
 
 ### 5.2 Einfaches "nicht gefunden" (`404` ohne Body)
 

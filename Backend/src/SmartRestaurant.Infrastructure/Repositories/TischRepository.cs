@@ -12,4 +12,7 @@ public sealed class TischRepository(SmartRestaurantDbContext dbContext) : ITisch
 
     public Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default) =>
         dbContext.Tische.AnyAsync(t => t.Id == id, cancellationToken);
+
+    public Task<Tisch?> GetByIdAsync(int id, CancellationToken cancellationToken = default) =>
+        dbContext.Tische.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
 }

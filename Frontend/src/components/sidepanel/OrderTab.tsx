@@ -1,6 +1,5 @@
 // Tab "Bestellung": Speisekarte nach Kategorie, Artikel hinzufügen und Menge ändern
 import type { MenuItem, Table } from "../../types";
-import { CATEGORIES, MENU } from "../../data";
 import { fmt } from "../../utils";
 import QtyBtn from "../buttons/QtyBtn";
 
@@ -8,12 +7,14 @@ interface OrderTabProps {
   table: Table;
   category: string;
   setCategory: (category: string) => void;
+  menu: MenuItem[];
+  categories: string[];
   onAdd: (item: MenuItem) => void;
   onChangeQty: (id: string, delta: number) => void;
 }
 
-export default function OrderTab({ table, category, setCategory, onAdd, onChangeQty }: OrderTabProps) {
-  const menuByCategory = MENU.filter((menuItem) => menuItem.category === category);
+export default function OrderTab({ table, category, setCategory, menu, categories, onAdd, onChangeQty }: OrderTabProps) {
+  const menuByCategory = menu.filter((menuItem) => menuItem.category === category);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -26,7 +27,7 @@ export default function OrderTab({ table, category, setCategory, onAdd, onChange
         }}
       >
         <div style={{ display: "flex", gap: 6 }}>
-          {CATEGORIES.map((categoryName) => {
+          {categories.map((categoryName) => {
             const active = category === categoryName;
             return (
               <button

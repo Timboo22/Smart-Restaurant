@@ -7,6 +7,11 @@ public sealed class TischResponse
     public bool IstBelegt { get; set; }
 }
 
+public sealed class TischStatusUpdateRequest
+{
+    public bool IstBelegt { get; set; }
+}
+
 public sealed class MitarbeiterResponse
 {
     public int MitarbeiterId { get; set; }
