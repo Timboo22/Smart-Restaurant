@@ -43,6 +43,6 @@
 
     ports:
       - "5173:80"
-
+-
 volumes:
   postgres_data:
